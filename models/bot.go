@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
+         log "github.com/sirupsen/logrus"
 	"github.com/beego/beego/v2/client/httplib"
 	"github.com/beego/beego/v2/core/logs"
 )
@@ -27,9 +27,9 @@ var ListenQQPrivateMessage = func(uid int64, msg string) {
 var ListenQQGroupMessage = func(gid int64, uid int64, msg string) {
 	log.Info(Config.QQGroupID)
 	groupIdList := strings.Split(Config.QQGroupID,",")
-	log.Info(gidStr)
 	log.Info(len(groupIdList))
 	gidStr:=strconv.FormatInt(gid,10)
+	log.Info(gidStr)
 	SendQQGroup(gid, uid, handleMessage(gidStr, "qqg", int(uid), int(gid)))
 	if In(gidStr,groupIdList) {
 		if Config.QbotPublicMode {
