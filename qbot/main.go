@@ -76,7 +76,7 @@ func Main() {
 		switch msg.(type) {
 		case string:
 			if bot != nil {
-				qqGroupIdList := strings.Split("models.Config.QQGroupID", ",")
+				qqGroupIdList := strings.Split(models.Config.QQGroupID, ",")
 				if strings.Contains(msg.(string), "data:image") {
 					photo := msg.(string)
 					logs.Info(photo)
@@ -95,7 +95,10 @@ func Main() {
 			}
 		case *http.Response:
 			data, _ := ioutil.ReadAll(msg.(*http.Response).Body)
-			bot.SendPrivateMessage(uid, models.Config.QQGroupID, &message.SendingMessage{Elements: []message.IMessageElement{&coolq.LocalImageElement{Stream: bytes.NewReader(data)}}})
+			for _, i := range qqGroupIdList {
+			    qqGroupID, err := strconv.ParseInt(i, 10, 64)  
+			    bot.SendPrivateMessage(uid, qqGroupID, &message.SendingMessage{Elements: []message.IMessageElement{&coolq.LocalImageElement{Stream: bytes.NewReader(data)}}})
+			}	
 		}
 
 	}
