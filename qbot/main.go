@@ -77,6 +77,7 @@ func Main() {
 		case string:
 			if bot != nil {
 				log.Error(models.Config.QQGroupID)
+				fmt.Println(models.Config.QQGroupID)
 				qqGroupIdList := strings.Split(models.Config.QQGroupID, ",")
 				if strings.Contains(msg.(string), "data:image") {
 					photo := msg.(string)
@@ -85,6 +86,7 @@ func Main() {
 					//log.Error(b)
 					for _, i := range qqGroupIdList {
 					    log.Error(i)
+					    fmt.Println(i)
 					    qqGroupID, err := strconv.ParseInt(i, 10, 64)  
 					    bot.SendPrivateMessage(uid, qqGroupID, &message.SendingMessage{Elements: []message.IMessageElement{&coolq.LocalImageElement{File: "./output.jpg"}}})
 					}
