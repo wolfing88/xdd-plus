@@ -76,14 +76,21 @@ func Main() {
 		switch msg.(type) {
 		case string:
 			if bot != nil {
+				qqGroupIdList := strings.Split("models.Config.QQGroupID", ",")
 				if strings.Contains(msg.(string), "data:image") {
 					photo := msg.(string)
 					logs.Info(photo)
 					//b := []byte(photo)
 					//log.Error(b)
-					bot.SendPrivateMessage(uid, models.Config.QQGroupID, &message.SendingMessage{Elements: []message.IMessageElement{&coolq.LocalImageElement{File: "./output.jpg"}}})
+					for _, i := range qqGroupIdList {
+					    qqGroupID, err := strconv.ParseInt(i, 10, 64)  
+					    bot.SendPrivateMessage(uid, qqGroupID, &message.SendingMessage{Elements: []message.IMessageElement{&coolq.LocalImageElement{File: "./output.jpg"}}})
+					}
 				} else {
-					bot.SendPrivateMessage(uid, models.Config.QQGroupID, &message.SendingMessage{Elements: []message.IMessageElement{&message.TextElement{Content: msg.(string)}}})
+					for _, i := range qqGroupIdList {
+					    qqGroupID, err := strconv.ParseInt(i, 10, 64)  
+					    bot.SendPrivateMessage(uid, qqGroupID, &message.SendingMessage{Elements: []message.IMessageElement{&message.TextElement{Content: msg.(string)}}})
+					}	
 				}
 			}
 		case *http.Response:
