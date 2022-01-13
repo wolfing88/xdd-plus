@@ -25,7 +25,10 @@ var ListenQQPrivateMessage = func(uid int64, msg string) {
 }
 
 var ListenQQGroupMessage = func(gid int64, uid int64, msg string) {
+	log.Info(Config.QQGroupID)
 	groupIdList := strings.Split(Config.QQGroupID,",")
+	log.Info(gidStr)
+	log.Info(len(groupIdList))
 	gidStr:=strconv.FormatInt(gid,10)
 	SendQQGroup(gid, uid, handleMessage(gidStr, "qqg", int(uid), int(gid)))
 	if In(gidStr,groupIdList) {
