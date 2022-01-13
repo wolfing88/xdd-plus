@@ -82,7 +82,7 @@ func main() {
 		time.Sleep(time.Second * 4)
 		(&models.JdCookie{}).Push("小滴滴已启动")
 	}()
-	if models.Config.QQID != 0 || models.Config.QQGroupID != 0 {
+	if models.Config.QQID != 0 || models.Config.QQGroupID != "" {
 		go qbot.Main()
 	}
 	web.Run()
